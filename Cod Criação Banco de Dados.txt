@@ -1,0 +1,82 @@
+-- Criação da tabela 'professores'
+CREATE TABLE professores (
+    id_professor INT PRIMARY KEY,
+    nome_professor VARCHAR(50)
+);
+
+
+-- Criação da tabela 'disciplinas'
+CREATE TABLE disciplinas (
+    id_disciplina INT PRIMARY KEY,
+    nome_disciplina VARCHAR(50)
+);
+
+-- Criação da tabela 'turmas'
+CREATE TABLE turmas (
+    id_turma INT PRIMARY KEY,
+    nome_turma VARCHAR(50),
+    id_professor INT,
+    id_disciplina INT,
+    FOREIGN KEY (id_professor) REFERENCES professores(id_professor),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id_disciplina)
+);
+
+-- Criação da tabela 'aulas'
+CREATE TABLE aulas (
+    id_aula INT PRIMARY KEY,
+    id_turma INT,
+    dia_semana VARCHAR(20),
+    horario_inicio TIME,
+    horario_fim TIME,
+    FOREIGN KEY (id_turma) REFERENCES turmas(id_turma)
+);
+
+-- Criação da tabela 'horarios'
+CREATE TABLE horarios (
+    id_horario INT PRIMARY KEY,
+    descricao_horario VARCHAR(50)
+);
+
+
+-- Criação da tabela 'alunos'
+CREATE TABLE alunos (
+    id_aluno INT PRIMARY KEY,
+    nome_aluno VARCHAR(50)
+);
+
+-- Criação da tabela 'login_alunos'
+CREATE TABLE login_alunos (
+    id_aluno INT PRIMARY KEY,
+    email_aluno VARCHAR(100),
+    senha_aluno VARCHAR(50),
+    FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno)
+);
+
+ --Criação da tabela 'notas'
+CREATE TABLE notas (
+    id_nota INT PRIMARY KEY,
+    id_aluno INT,
+    id_disciplina INT,
+    nota FLOAT,
+    FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id_disciplina)
+);
+
+-- Criação da tabela 'faltas'
+CREATE TABLE faltas (
+    id_falta INT PRIMARY KEY,
+    id_aluno INT,
+    id_disciplina INT,
+    quantidade INT,
+    FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id_disciplina)
+);
+
+-- Criação da tabela 'atividades'
+CREATE TABLE atividades (
+    id_atividade INT PRIMARY KEY,
+    id_turma INT,
+    descricao VARCHAR(100),
+    data_entrega DATE,
+    FOREIGN KEY (id_turma) REFERENCES turmas(id_turma)
+);
